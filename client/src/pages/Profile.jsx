@@ -16,38 +16,36 @@ function Profile() {
     (flashCard) => flashCard.userID._id === user._id
   );
   useEffect(() => {
-    setUsersFlash(filteredFlashCards);
-  }, [flashCards, filteredFlashCards]);
-
+    if (JSON.stringify(usersFlash) !== JSON.stringify(filteredFlashCards)) {
+      setUsersFlash(filteredFlashCards);
+    }
+  }, [flashCards, filteredFlashCards, usersFlash]);
+  
+  
   const handleDivClick = (id) => {
     navigate(`/flashCard/${id}`);
   };
 
   const handleDelete = (id) => {
-    // Make an HTTP request with Axios
     axios
       .delete(`http://localhost:5000/api/flash/flashCard/${id}`)
       .then((response) => {
-        // Handle the response
         console.log(response.data);
-        
-        // Filter out the deleted flashCard from usersFlash
-        const updatedUsersFlash = usersFlash.filter((flashCard) => flashCard._id !== id);
-        
+  
         // Update the state with the filtered list
-        setUsersFlash(updatedUsersFlash);
+        setUsersFlash((prevUsersFlash) =>
+          prevUsersFlash.filter((flashCard) => flashCard._id !== id)
+        );
       })
       .catch((error) => {
-        // Check if the request was cancelled
         if (axios.isCancel(error)) {
           console.log("Request cancelled", error.message);
         } else {
-          // Handle other errors
           console.log("Error:", error.message);
         }
       });
   };
-
+  
   return (
     <>
       <div className="bg-koyuyesil">
@@ -84,7 +82,8 @@ function Profile() {
               CARD'LARIN
             </div>
             <div className="row h-screen flex items-center justify-between">
-              {usersFlash.map((flashCard) => (
+           { usersFlash.length > 0 ? (
+              usersFlash.map((flashCard) => (
                 <div className="col-3 cursor-pointer bg-blue-300 h-48 w-64 ml-5 mr-5 rounded-sm shadow-lg d-flex flex-column justify-content-center align-items-center">
                   <div
                     key={flashCard._id}
@@ -112,7 +111,11 @@ function Profile() {
                     <FaTrashCan />
                   </button>
                 </div>
-              ))}
+              ))
+            
+              ) : (
+                <div className="text-white text-center text-4xl" >No flash cards found.</div>
+              )}
             </div>
           </div>
         </div>
