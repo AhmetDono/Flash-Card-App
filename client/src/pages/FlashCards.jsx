@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
 function FlashCards() {
-  const dispacth = useDispatch();
   const navigate = useNavigate();
 
   const [allCard,setAllCard] = useState([])

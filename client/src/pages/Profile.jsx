@@ -17,7 +17,7 @@ function Profile() {
   );
   useEffect(() => {
     setUsersFlash(filteredFlashCards);
-  }, [flashCards]);
+  }, [flashCards, filteredFlashCards]);
 
   const handleDivClick = (id) => {
     navigate(`/flashCard/${id}`);
