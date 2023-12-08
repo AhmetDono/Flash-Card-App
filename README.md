@@ -1,4 +1,4 @@
 # Flash-Card-App
 
-[![Video]]
-(https://youtu.be/s_oP8K3bFj0)
+[![IMAGE ALT TEXT HERE]()](https://www.youtube.com/watch?v=s_oP8K3bFj0)
+
